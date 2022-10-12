@@ -1,0 +1,19 @@
+Maximum capture length for interface 0:	               48
+First timestamp:                     1029351300.000016000
+Last timestamp:                      1029351599.999995000
+Unknown encapsulation:                                  0
+IPv4 bytes:                                   13886020909
+IPv4 pkts:                                       21857366
+IPv4 flows:                                       1076891
+Unique IPv4 addresses:                             223142
+Unique IPv4 source addresses:                       94631
+Unique IPv4 destination addresses:                 128978
+Unique IPv4 TCP source ports:                       61736
+Unique IPv4 TCP destination ports:                  59756
+Unique IPv4 UDP source ports:                       13024
+Unique IPv4 UDP destination ports:                  14912
+Unique IPv4 ICMP type/codes:                           15
+IPv6 pkts:                                              0
+IPv6 bytes:                                             0
+non-IP protocols:                                       0
+non-IP pkts:                                            0
