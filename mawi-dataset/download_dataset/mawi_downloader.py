@@ -5,10 +5,9 @@ from datetime import timedelta, datetime
 import pytz
 import subprocess
 
-def execute_command(command):
-    p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    for line in iter(p.stdout.readline, b''):
-        print(line.rstrip().decode('utf-8'))
+def execute_command(command, output_file):
+    with open(output_file, "w") as outfile:
+        p = subprocess.run(command, stdout=outfile, stderr=subprocess.STDOUT)
 
 def download_file(url, year, month):
     path = './{}/{}'.format(year, month)
@@ -64,6 +63,7 @@ while date < dest_date:
         file_name = download_mawi_dump(date.year, date.day, date.month, "1400")
         command = '"C:\Program Files\Wireshark\\tshark.exe" -r {} -T fields -e ip.src -e ip.dst -e ip.len -e frame.time_epoch -e icmp -E separator="," -E header=y -Y "tcp and !icmp"'.format(file_name)
         print("Command: {}".format(command))
+        execute_command(command, file_name + '.csv')
 
 # Tshark pcap to csv with ip source, ip dest, packet len and time. Only TCP packets.
 # tshark -r .\200701011400.dump -T fields -e ip.src -e ip.dst -e ip.len -e frame.time_epoch -e icmp -E separator="," -E header=y -Y "tcp and !icmp"
