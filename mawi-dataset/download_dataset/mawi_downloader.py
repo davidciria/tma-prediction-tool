@@ -50,7 +50,8 @@ def download_mawi_dump(year, day, month, hour_min):
     hour_min = hour_min
     url = "http://mawi.wide.ad.jp/mawi/samplepoint-F/{}/{}{}{}{}.pcap.gz".format(year, year, month_str, day_str, hour_min)
 
-    download_file(url, year, month)
+    file_name = download_file(url, year, month)
+    return file_name
 
 es_tz = pytz.timezone('Europe/Madrid')
 
