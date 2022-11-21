@@ -62,7 +62,7 @@ while date < dest_date:
     # Download all mondays data.
     if date.weekday() == 0:
         file_name = download_mawi_dump(date.year, date.day, date.month, "1400")
-        command = '"C:\Program Files\Wireshark\\tshark.exe" -r {} -T fields -e ip.src -e ip.dst -e ip.len -e frame.time_epoch -e icmp -E separator="," -E header=y -Y "tcp and !icmp" > {}.csv'.format(file_name)
+        command = '"C:\Program Files\Wireshark\\tshark.exe" -r {} -T fields -e ip.src -e ip.dst -e ip.len -e frame.time_epoch -e icmp -E separator="," -E header=y -Y "tcp and !icmp"'.format(file_name)
         print("Command: {}".format(command))
 
 # Tshark pcap to csv with ip source, ip dest, packet len and time. Only TCP packets.
