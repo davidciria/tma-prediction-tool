@@ -66,6 +66,11 @@ while date < dest_date:
         print("Command: {}".format(command))
         execute_command(command, file_name + '.csv')
 
+
+# Sampling with pcap sampler.
+# ./pcapsampler -m COUNT_SYS -r 100 filetosample.pcap sampledfile.pcap
+
+
 # Tshark pcap to csv with ip source, ip dest, packet len and time. Only TCP packets.
 # tshark -r .\200701011400.dump -T fields -e ip.src -e ip.dst -e ip.len -e frame.time_epoch -e icmp -E separator="," -E header=y -Y "tcp and !icmp"
 # 491 MB file --> 15 minutes.
