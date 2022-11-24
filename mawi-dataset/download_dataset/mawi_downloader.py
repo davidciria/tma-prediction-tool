@@ -5,36 +5,39 @@ from datetime import timedelta, datetime
 import pytz
 import subprocess
 
-def execute_command(command, output_file):
-    with open(output_file, "w") as outfile:
-        p = subprocess.run(command, stdout=outfile, stderr=subprocess.STDOUT)
+def execute_command(command, output_file = None):
+    if output_file:
+        with open(output_file, "w") as outfile:
+            p = subprocess.run(command, stdout=outfile, stderr=subprocess.STDOUT, shell=True)
+    else:
+        p = subprocess.run(command, shell=True)
 
 def download_file(url, year, month):
     path = './{}/{}'.format(year, month)
     Path(path).mkdir(parents=True, exist_ok=True)
     file_name = './{}/{}/{}'.format(year, month, url.split('/')[-1])
 
-    with open(file_name, "wb") as f:
-        response = requests.get(url, stream=True)
-        print("Downloading %s" % file_name)
-        print("URL: {}".format(url))
+    # with open(file_name, "wb") as f:
+    #     response = requests.get(url, stream=True)
+    #     print("Downloading %s" % file_name)
+    #     print("URL: {}".format(url))
 
-        total_length = response.headers.get('content-length')
-        if total_length is None: # no content length header
-            f.write(response.content)
-        else:
-            if int(total_length) < 500:
-                print("[ERROR] File not found")
-            else:
-                dl = 0
-                total_length = int(total_length)
-                print("File size: " + "{:.2f}".format(total_length/(1024*1024)) + "MB")
-                for data in response.iter_content(chunk_size=4096):
-                    dl += len(data)
-                    f.write(data)
-                    done = int(50 * dl / total_length)
-                    sys.stdout.write("\r[%s%s]" % ('=' * done, ' ' * (50-done)) )    
-                    sys.stdout.flush()
+    #     total_length = response.headers.get('content-length')
+    #     if total_length is None: # no content length header
+    #         f.write(response.content)
+    #     else:
+    #         if int(total_length) < 500:
+    #             print("[ERROR] File not found")
+    #         else:
+    #             dl = 0
+    #             total_length = int(total_length)
+    #             print("File size: " + "{:.2f}".format(total_length/(1024*1024)) + "MB")
+    #             for data in response.iter_content(chunk_size=4096):
+    #                 dl += len(data)
+    #                 f.write(data)
+    #                 done = int(50 * dl / total_length)
+    #                 sys.stdout.write("\r[%s%s]" % ('=' * done, ' ' * (50-done)) )    
+    #                 sys.stdout.flush()
     
     return file_name
 
@@ -55,14 +58,22 @@ def download_mawi_dump(year, day, month, hour_min):
 
 es_tz = pytz.timezone('Europe/Madrid')
 
-date = es_tz.localize(datetime(2019, 1, 1))
+date = es_tz.localize(datetime(2019, 1, 9))
 dest_date = es_tz.localize(datetime(2022, 1, 1))
 while date < dest_date:
     date += timedelta(days=1)
     # Download all mondays data.
     if date.weekday() == 0:
         file_name = download_mawi_dump(date.year, date.day, date.month, "1400")
-        command = '"C:\Program Files\Wireshark\\tshark.exe" -r {} -T fields -e ip.src -e ip.dst -e ip.len -e frame.time_epoch -e icmp -E separator="," -E header=y -Y "tcp and !icmp"'.format(file_name)
+
+        # Unzip the file.
+        # command = 'gzip -d {}'.format(file_name)
+        # print("Command: {}".format(command))
+        # execute_command(command)
+
+        # Reduce the size with tshark.
+        file_name_d = file_name[0:-3]
+        command = 'tshark -r {} -T fields -e ip.src -e ip.dst -e ip.len -e frame.time_epoch -e icmp -E separator="," -E header=y -Y "tcp and !icmp"'.format(file_name_d)
         print("Command: {}".format(command))
         execute_command(command, file_name + '.csv')
 
