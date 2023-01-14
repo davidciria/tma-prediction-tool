@@ -5,7 +5,7 @@ Tool for predicting network traffic for Traffic Monitoring and Analysis (TMA) su
 # Introduction
 The "caida-passive-oc48-dataset" folder and the "EWMA.ipynb" file were used for testing, in the first steps of our project. We also did an initial version of the model using a single MAWI dataset ("mawi-dataset" folder). However, this is not the final version.
 
-We can find the required files for the final projectin the "python_notebooks" folder.
+We can find the required files for the final project in the "python_notebooks" folder.
 
 # Dataset download
 
