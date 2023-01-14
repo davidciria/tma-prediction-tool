@@ -43,11 +43,11 @@ To label the dataset we have mesaured the slope between two consecutive points. 
 # Sources
 
 ## External tools and libs
-https://github.com/groud/pcapsampler
-https://tshark.dev/
-https://keras.io/
-https://scikit-learn.org/stable/
+- https://github.com/groud/pcapsampler
+- https://tshark.dev/
+- https://keras.io/
+- https://scikit-learn.org/stable/
 
 ## State of art papers
-https://dl.ifip.org/db/conf/cnsm/cnsm2019/1570563478.pdf
-https://arxiv.org/pdf/1911.11552v1.pdf
+- https://dl.ifip.org/db/conf/cnsm/cnsm2019/1570563478.pdf
+- https://arxiv.org/pdf/1911.11552v1.pdf
